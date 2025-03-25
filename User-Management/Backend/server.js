@@ -3,6 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 //import pool from './db.js';
 const { Pool } = require('pg');
+const multer = require('multer');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -131,6 +133,49 @@ app.delete('/users/deleteuser/:id', async (req,res) => {
     }
 });
 
+
+ //taking file from user to store
+const storage = multer.diskStorage({  //used to configure the storage of files.
+    destination: (req,file,cb) => {
+        cb(null, './uploads/');
+    },
+    filename: (req,file,cb) =>{
+        cb(null,Date.now() + path.extname(file.originalname)); //filename with timestamp
+    },
+});
+
+const upload = multer({storage: storage});
+
+if(!fs.existsSync('./uploads')){
+   fs.mkdirSync('./uploads');
+}
+
+
+app.post('/users/upload', upload.single('profile_pic') ,async (req,res) => {
+    if(!req.file){
+        return res.status(400).send('No file uploaded!');
+    }
+
+    const {name,age,email,password,phone,country,role} = req.body;
+    const profilePicPath = req.file ? req.file.path : null; // Get file path from Multer
+    try{
+        const result = await pool.query(  
+            'insert into demo (name,age,email,password,phone,country,role,created_at,updated_at) values ($1,$2,$3,$4,$5,$6,$7,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP) Returning *',
+           [name,age,email,password,phone,country,role,profilePicPath]
+        );
+        //res.json(result.rows[0],filePath: result.rows[0].profile_pic);
+        res.json(result.rows[0]);
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send('server Error');
+    }
+});
+
+
 app.listen(port, ()=>{
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+// app.use('/uploads',express.static('uploads'));

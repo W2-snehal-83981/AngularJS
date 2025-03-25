@@ -18,7 +18,7 @@ export class UserService {
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.URL}/login`, { email, password });
-   }
+  }
 
 //   addUser(userData: { name: string, age: number, email: string, password: string, phone: string, country: string, role: string }): Observable<any> {
 //     return this.http.post(`${this.URL}/adduser`,userData);
@@ -30,6 +30,14 @@ export class UserService {
 
   getUserById(id: number): Observable<any>{
     return this.http.get(`${this.URL}/getuser/${id}`);
+  }
+
+  // logout(): void {
+  //   localStorage.removeItem('user');
+  // }
+
+  getUser(): any {
+    return JSON.parse(localStorage.getItem('user') || '{}');
   }
 
 //   deleteUser(id:number) : Observable<any> {

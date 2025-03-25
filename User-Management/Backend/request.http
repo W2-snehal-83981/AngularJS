@@ -26,12 +26,12 @@ Content-Type: application/json
 }
 
 ### Update user
-PUT http://localhost:3000/users/edituser/5
+PUT http://localhost:3000/users/edituser/1
 Content-Type: application/json
 
 {
   "age": 26,
-  "email": "admin3new@gmail.com",
+  "email": "user2@gmail.com",
   "phone": "1212121212",
   "country": "China"
 }
@@ -42,4 +42,63 @@ GET http://localhost:3000/users/getuser/6
 ### Delete user
 DELETE http://localhost:3000/users/deleteuser/16
 
-###
+### Add new user
+POST http://localhost:3000/users/adduser
+Content-Type: application/json
+
+{
+  "name": "admin11",
+  "age": 25,
+  "email": "admin1@gmail.com",
+  "password": "admin11",
+  "phone": "1234567890",
+  "country": "India",
+  "role": "admin"
+}
+
+### Add User with Profile Picture
+POST http://localhost:3000/users/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="snehal"
+
+user1
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="25"
+
+25
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="snehal@gmail.com"
+
+user1@gmail.com
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="snehal@123"
+
+user1
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="6754398761"
+
+1234567890
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="Japan"
+
+India
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="admin"
+
+user
+--WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profilepic"; filename="Snehal Khandale_Photo.jpg"
+Content-Type: image/jpeg
+
+<binary file data here>
+
+--WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+#----WebKitFormBoundary7MA4YWxkTrZu0gW
+#Content-Disposition: form-data; name="profilepic"; filename="C:\Users\skhandal\Downloads\Snehal Khandale_Photo"
+#Content-Type: image/jpeg
+
+#<content of the image file goes here>
+#----WebKitFormBoundary7MA4YWxkTrZu0gW--
