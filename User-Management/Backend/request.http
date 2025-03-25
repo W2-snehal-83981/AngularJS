@@ -1,0 +1,45 @@
+
+### Get all users
+GET http://localhost:3000/users/getusers
+
+### Login user
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "email": "user1@gmail.com",
+  "password": "user1"
+}
+
+### Add new user
+POST http://localhost:3000/users/adduser
+Content-Type: application/json
+
+{
+    "name": "user1",
+  "age": 25,
+  "email": "user1@gmail.com",
+  "password": "user1",
+  "phone": "1234567890",
+  "country": "India",
+  "role": "user"
+}
+
+### Update user
+PUT http://localhost:3000/users/edituser/5
+Content-Type: application/json
+
+{
+  "age": 26,
+  "email": "admin3new@gmail.com",
+  "phone": "1212121212",
+  "country": "China"
+}
+
+### Get user by Id
+GET http://localhost:3000/users/getuser/6
+
+### Delete user
+DELETE http://localhost:3000/users/deleteuser/16
+
+###

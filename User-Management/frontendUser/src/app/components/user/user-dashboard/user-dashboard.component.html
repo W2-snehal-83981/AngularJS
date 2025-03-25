@@ -1,0 +1,45 @@
+<div *ngIf="user">
+    <h2>User Profile</h2>
+    <table border="1">
+      <tr>
+        <th>Field</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>ID</td>
+        <td>{{ user.id }}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{ user.name }}</td>
+      </tr>
+      <tr>
+        <td>Age</td>
+        <td>{{ user.age }}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{ user.email }}</td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td>{{ user.password }}</td> <!-- Displaying password is not recommended in real apps -->
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{ user.phone }}</td>
+      </tr>
+      <tr>
+        <td>Country</td>
+        <td>{{ user.country }}</td>
+      </tr>
+      <tr>
+        <td>Role</td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="!user">
+    <p>Loading...</p>
+  </div>
+  
