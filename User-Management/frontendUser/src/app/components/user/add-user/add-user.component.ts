@@ -11,15 +11,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add-user.component.css'
 })
 export class AddUserComponent {
-  // user = { name: '', email: '', age: null, address: '', phone: '' };
-
-  // constructor(private userService: UserService, private router: Router) {}
-
-  // addUser(): void {
-  //   this.userService.addUser(this.user).subscribe(() => {
-  //     this.router.navigate(['/view-users']);
-  //   });
-  // }
   userForm!: FormGroup;
   isSubmitting = false;
   submitSuccess = false;

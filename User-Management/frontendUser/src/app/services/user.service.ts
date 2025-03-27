@@ -12,41 +12,52 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  //get all users
   getAllUsers():Observable<any> {
     return this.http.get(`${this.URL}/getusers`);
   }
 
+  //login 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.URL}/login`, { email, password });
   }
 
-//   addUser(userData: { name: string, age: number, email: string, password: string, phone: string, country: string, role: string }): Observable<any> {
-//     return this.http.post(`${this.URL}/adduser`,userData);
-//   }
+  //add new user
+  addUser(user:any): Observable<any> {
+    return this.http.post(`${this.URL}/adduser`,user);
+  }
 
+ //edit existing user
   updateUser(id : number,  updatedData: { age: number, email: string, phone: string, country: string }): Observable<any> {
     return this.http.put(`${this.URL}/edituser/${id}`,updatedData);
   }
 
+  //fetch user by id
   getUserById(id: number): Observable<any>{
     return this.http.get(`${this.URL}/getuser/${id}`);
   }
-
+  
+  //fetch user by role
   getUserByRole(role:string): Observable<any> {
     return this.http.get(`${this.URL}/filter?role=${role}`);
-    // let url = this.URL;
-    // if(role){
-    //   url += `/getuser?role=${role}`;
-    // }
-    // return this.http.get(url);
   }
-  // logout(): void {
-  //   localStorage.removeItem('user');
-  // }
 
+  //to retrive user object from localstorage to show profile of user
   getUser(): any {
     return JSON.parse(localStorage.getItem('user') || '{}');
   }
+
+ //delete user
+  deleteUser(id:number) : Observable<any> {
+    return this.http.delete(`${this.URL}/deleteuser/${id}`);
+  }
+}
+
+
+
+  //   addUser(userData: { name: string, age: number, email: string, password: string, phone: string, country: string, role: string }): Observable<any> {
+//     return this.http.post(`${this.URL}/adduser`,userData);
+//   }
 
 //   deleteUser(id:number) : Observable<any> {
 //     return this.http.delete(`${this.URL}/deleteuser/${id}`);
@@ -60,15 +71,8 @@ export class UserService {
 //     return this.http.post(`${this.URL}/login`, credentials);
 //   }
 
-  addUser(user:any): Observable<any> {
-    return this.http.post(`${this.URL}/adduser`,user);
-  }
 
   // updateUser(id : number, user:any): Observable<any> {
   //   return this.http.put(`${this.URL}/edituser/${id}`,user);
   // }
 
-  deleteUser(id:number) : Observable<any> {
-    return this.http.delete(`${this.URL}/deleteuser/${id}`);
-  }
-}

@@ -123,6 +123,8 @@ export class EditUserComponent implements OnInit {
   }
 }
 
+
+
 //   user : any= { id: null, name: '', email: '', age: null, address: '', phone: '' };
 
 //   constructor(

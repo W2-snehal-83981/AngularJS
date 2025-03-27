@@ -15,7 +15,12 @@ export class UserDashboardComponent implements OnInit{
   constructor(private router: Router, private userService: UserService){}
 
   ngOnInit(): void {
-    // const user = localStorage.getItem('user');
+    this.user = this.userService.getUser();
+    if(!this.user.id){
+      this.router.navigate(['/login']);
+    }
+
+      // const user = localStorage.getItem('user');
     // const role = localStorage.getItem('role');
     
     // console.log('user: ',user);
@@ -26,10 +31,6 @@ export class UserDashboardComponent implements OnInit{
     // else{
     //   this.user = JSON.parse(user); //parse user from localstorage
     // }
-    this.user = this.userService.getUser();
-    if(!this.user.id){
-      this.router.navigate(['/login']);
-    }
   }
 
   logout(): void {

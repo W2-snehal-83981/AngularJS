@@ -24,7 +24,7 @@ export class LoginComponent {
   
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],             //validation regarding feild.
+      email: ['', [Validators.required, Validators.email]],             //validations of feilds.
       password: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
@@ -44,6 +44,7 @@ export class LoginComponent {
       console.log('Login successful', response);
       localStorage.setItem('user', JSON.stringify(response.userData)); //after login user store in localstorage
       localStorage.setItem('role', response.role);  //after login role store in localstorage
+      
       if(response.role === 'admin'){
         this.router.navigate(['/dashboard']);
       }

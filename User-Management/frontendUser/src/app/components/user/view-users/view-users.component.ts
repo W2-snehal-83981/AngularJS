@@ -31,9 +31,9 @@ export class ViewUsersComponent implements OnInit{
       this.users = data;
     });
 
-    this.userService.getAllUsers().subscribe((data) => {
-      this.users = data;
-    });
+    // this.userService.getAllUsers().subscribe((data) => {
+    //   this.users = data;
+    // });
   }
 
   onRoleChange(): void {

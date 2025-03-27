@@ -169,7 +169,7 @@ if(!fs.existsSync('./uploads')){
    fs.mkdirSync('./uploads');
 }
 
-//app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); //mapped to the corresponding file in uploads directory
 
 app.post('/users/upload', upload.single('profile_pic') ,async (req,res) => {
     if(!req.file){
@@ -194,31 +194,22 @@ app.post('/users/upload', upload.single('profile_pic') ,async (req,res) => {
 
 //search user by role
 app.get('/users/filter', async (req, res) => {
-    const { role } = req.query.role;  // Get role from query parameter
- 
-     
-  if (!role) {
+    const { role } = req.query;  // Get role from query parameter
+    console.log(req.query);
+    
+  if (!role ) {
     return res.status(400).json({ message: 'Role is required' }); // If role is not provided
   }
-     
-  try {
-    const result = await pool.query('SELECT * FROM Users WHERE role = $1', [role]);
-    res.json(result.rows); // Send filtered users as response
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server Error');
-  }
+    try {
+        const result = role 
+            ? await pool.query('SELECT * FROM Users WHERE role = $1', [role])  // Filter users by role
+            : await pool.query('SELECT * FROM Users');  // If no role is passed, return all users
 
-    // try {
-    //     const result = role 
-    //         ? await pool.query('SELECT * FROM Users WHERE role = $1', [role])  // Filter users by role
-    //         : await pool.query('SELECT * FROM Users');  // If no role is passed, return all users
-
-    //     res.json(result.rows);  // Return filtered users
-    // } catch (error) {
-    //     console.log(error);
-    //     res.status(500).send('Server Error');
-    // }
+        res.json(result.rows);  // Return filtered users
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error');
+    }
 });
 
 
