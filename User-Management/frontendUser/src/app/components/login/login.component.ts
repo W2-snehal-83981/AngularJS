@@ -15,8 +15,6 @@ export class LoginComponent {
   loginForm!: FormGroup;                         //using the '!' we assured the form is not empty.
   isLoading = false;                              
   errorMessage = '';
-
-  
   
   constructor(
     private formBuilder: FormBuilder,             
@@ -29,10 +27,8 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],             //validation regarding feild.
       password: ['', [Validators.required, Validators.minLength(4)]]
     });
-
-    
   }
-  
+
   onSubmit(): void {
     if (this.loginForm.invalid) {
       return;

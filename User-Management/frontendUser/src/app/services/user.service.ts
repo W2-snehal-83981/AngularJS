@@ -32,6 +32,14 @@ export class UserService {
     return this.http.get(`${this.URL}/getuser/${id}`);
   }
 
+  getUserByRole(role:string): Observable<any> {
+    return this.http.get(`${this.URL}/filter?role=${role}`);
+    // let url = this.URL;
+    // if(role){
+    //   url += `/getuser?role=${role}`;
+    // }
+    // return this.http.get(url);
+  }
   // logout(): void {
   //   localStorage.removeItem('user');
   // }

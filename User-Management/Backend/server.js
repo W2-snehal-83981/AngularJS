@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -23,7 +24,7 @@ const pool = new Pool({
 
 // API
 //The RETURNING * in the SQL query allows you to retrieve all the fields of the newly inserted row after the INSERT INTO operation.
-
+//fetch all users
 app.get('/users/getusers', async (req,res) => {
   try{
     const result = await pool.query('select * from Users');
@@ -35,6 +36,7 @@ app.get('/users/getusers', async (req,res) => {
   }
 });
 
+//login
 app.post('/users/login',async (req,res) => {
     const {email,password} = req.body;
     try{
@@ -63,6 +65,7 @@ app.post('/users/login',async (req,res) => {
       }
 });
 
+//adding new user
 app.post('/users/adduser',async (req,res) => {
     const {name,age,email,password,phone,country,role} = req.body;
     try{
@@ -78,6 +81,7 @@ app.post('/users/adduser',async (req,res) => {
     }
 });
 
+//edit user
 app.put('/users/edituser/:id',async (req,res) => {
     const {id} = req.params;
     const {age,email,phone,country} = req.body;
@@ -99,6 +103,7 @@ app.put('/users/edituser/:id',async (req,res) => {
     }
 });
 
+//get user by Id
 app.get('/users/getuser/:id', async (req, res) => {
     const id = parseInt(req.params.id);
  
@@ -118,6 +123,7 @@ app.get('/users/getuser/:id', async (req, res) => {
     }
   });
 
+//delete user
 app.delete('/users/deleteuser/:id', async (req,res) => {
     const {id} = req.params;
     try{
@@ -133,11 +139,24 @@ app.delete('/users/deleteuser/:id', async (req,res) => {
     }
 });
 
+//fetch profile pic
+app.get('/users/getpic', async (req,res) => {
+    try{
+      const result = await pool.query('select * from demo');
+      res.json(result.rows);
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).send('Server Error');
+    }
+});
 
+
+//upload file
  //taking file from user to store
 const storage = multer.diskStorage({  //used to configure the storage of files.
     destination: (req,file,cb) => {
-        cb(null, './uploads/');
+        cb(null, './uploads/'); //destination folder for upload image
     },
     filename: (req,file,cb) =>{
         cb(null,Date.now() + path.extname(file.originalname)); //filename with timestamp
@@ -150,6 +169,7 @@ if(!fs.existsSync('./uploads')){
    fs.mkdirSync('./uploads');
 }
 
+//app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.post('/users/upload', upload.single('profile_pic') ,async (req,res) => {
     if(!req.file){
@@ -157,10 +177,10 @@ app.post('/users/upload', upload.single('profile_pic') ,async (req,res) => {
     }
 
     const {name,age,email,password,phone,country,role} = req.body;
-    const profilePicPath = req.file ? req.file.path : null; // Get file path from Multer
+    const profilePicPath = req.file ? req.file.path.replace(/\\/g,'/') : null; // Get file path from Multer  // Convert \ to /
     try{
         const result = await pool.query(  
-            'insert into demo (name,age,email,password,phone,country,role,created_at,updated_at) values ($1,$2,$3,$4,$5,$6,$7,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP) Returning *',
+            'insert into demo (name,age,email,password,phone,country,role,profile_pic,created_at,updated_at) values ($1,$2,$3,$4,$5,$6,$7,$8,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP) Returning *',
            [name,age,email,password,phone,country,role,profilePicPath]
         );
         //res.json(result.rows[0],filePath: result.rows[0].profile_pic);
@@ -170,6 +190,35 @@ app.post('/users/upload', upload.single('profile_pic') ,async (req,res) => {
         console.log(error);
         res.status(500).send('server Error');
     }
+});
+
+//search user by role
+app.get('/users/filter', async (req, res) => {
+    const { role } = req.query.role;  // Get role from query parameter
+ 
+     
+  if (!role) {
+    return res.status(400).json({ message: 'Role is required' }); // If role is not provided
+  }
+     
+  try {
+    const result = await pool.query('SELECT * FROM Users WHERE role = $1', [role]);
+    res.json(result.rows); // Send filtered users as response
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+
+    // try {
+    //     const result = role 
+    //         ? await pool.query('SELECT * FROM Users WHERE role = $1', [role])  // Filter users by role
+    //         : await pool.query('SELECT * FROM Users');  // If no role is passed, return all users
+
+    //     res.json(result.rows);  // Return filtered users
+    // } catch (error) {
+    //     console.log(error);
+    //     res.status(500).send('Server Error');
+    // }
 });
 
 

@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+/* Custom styles */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Style for logout link */
+.nav-link.text-danger {
+    font-weight: bold;
+}
+
+.router-outlet {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+}

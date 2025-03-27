@@ -56,49 +56,56 @@ Content-Type: application/json
   "role": "admin"
 }
 
+
+### fetch user by role
+GET http://localhost:3000/users/filter?role=user
+Content-Type: application/json
+
+### Fetch users by role 'admin'
+GET http://localhost:3000/users/filter?role='admin'
+Content-Type:  application/json
+
+###
+GET http://localhost:3000/users/getpic
+Accept: application/json
+
 ### Add User with Profile Picture
-POST http://localhost:3000/users/upload HTTP/1.1
+POST http://localhost:3000/users/upload
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="snehal"
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
 
-user1
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="25"
+sharvary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="age"
 
-25
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="snehal@gmail.com"
+24
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
 
-user1@gmail.com
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="snehal@123"
+sharvary@example.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
 
-user1
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="6754398761"
+sharvary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="phone"
 
 1234567890
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="Japan"
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="country"
 
 India
-----WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="admin"
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="role"
 
 user
---WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="profilepic"; filename="Snehal Khandale_Photo.jpg"
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profile_pic"; filename="profile_pic.jpg"
 Content-Type: image/jpeg
 
-<binary file data here>
+@C:/Users\skhandal\Downloads\Snehal Khandale_Photo.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
---WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-#----WebKitFormBoundary7MA4YWxkTrZu0gW
-#Content-Disposition: form-data; name="profilepic"; filename="C:\Users\skhandal\Downloads\Snehal Khandale_Photo"
-#Content-Type: image/jpeg
-
-#<content of the image file goes here>
-#----WebKitFormBoundary7MA4YWxkTrZu0gW--
